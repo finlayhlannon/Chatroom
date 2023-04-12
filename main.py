@@ -4,12 +4,6 @@ import random
 from string import ascii_uppercase
 from datetime import datetime, timedelta
 
-# Example of connecting to a Flask-SocketIO server
-var socket = io("https://chitchats.vercel.app");  # Set the Socket.IO connection URL
-
-# Example of connecting to a specific namespace on a Flask-SocketIO server
-var socket = io("https://chitchats.vercel.app/room");  # Set the Socket.IO connection URL with namespace
-
 
 app = Flask(__name__, template_folder='', static_url_path='', static_folder='')
 app.config["SECRET_KEY"] = "hjhjsdahhds"
