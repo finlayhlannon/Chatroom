@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Room</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      .chat-container {
+        margin: 0 auto;
+        max-width: 600px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .chat-heading {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .chat-label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      .chat-input {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      .join-btn,
+      .create-btn {
+        display: block;
+        background-color: #57a757;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+      }
+
+      .join-btn:hover,
+      .create-btn:hover {
+        background-color: #77cf77;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      .join-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .join-group .join-btn {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <form method="post">
+        <h2 class="chat-heading">Join or Create a Chat Room</h2>
+        <div class="form-group">
+          <label for="name" class="chat-label">Name:</label>
+          <input type="text" class="chat-input" placeholder="Enter your name" name="name" value="{{ name }}">
+        </div>
+        <div class="form-group join-group">
+          <label for="code" class="chat-label">Room Code:</label>
+          <div>
+            <input type="text" class="chat-input" placeholder="Enter room code" name="code" value="{{ code }}">
+          </div>
+          <button type="submit" name="join" class="join-btn">Join Room</button>
+        </div>
+        <button type="submit" name="create" class="create-btn">Create Room</button>
+        {% if error %}
+        <div class="error-message">
+          <p>{{ error }}</p>
+        </div>
+        {% endif %}
+      </form>
+    </div>
+  </body>
+</html>

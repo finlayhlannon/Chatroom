@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--
+  <div class="coins">
+    <img src="coin.png" alt=" " width="15" height="15">
+    <span>Coins: </span>
+    <span id="coin-count">0</span>
+  </div>
+  -->
+
+  <div class="message-box">
+    <h2 class="title">Chat Room: {{code}}</h2>
+    <div class="messages" id="messages"></div>
+    <div class="inputs">
+      <input type="text" rows="3" placeholder="Message" name="message" id="message" onkeydown="if(event.keyCode==13){sendMessage();}" />
+      <button type="button" name="send" id="send-btn" onClick="sendMessage()">Send</button>
+    </div>
+  </div>
+  <style>
+    .message-box {
+      max-width: 500px;
+      width: 500px;
+      height: 600px;
+      max-height: 600px;
+      margin: 0 auto;
+      /*margin-left: 10px;*/
+      margin-right: 420px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    
+    .title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .messages {
+      max-height: 300px;
+      width: 500;
+      overflow-y: scroll;
+      margin-bottom: 20px;
+      width: 100%;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+    }
+
+    .coins {
+      margin-top: 20px;
+      margin-left: 250px;
+    }
+
+    .text {
+      margin-bottom: 10px;
+      border-radius: 5px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+    }
+
+    .text span {
+      display: block;
+    }
+
+    .text strong {
+      font-weight: bold;
+    }
+
+    .muted {
+      color: #999;
+      font-size: 12px;
+      margin-top: 5px;
+      display: block;
+    }
+
+    .inputs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-right: 10px;
+      font-size: 18px;
+      /*margin-bottom: 30px;*/
+    }
+
+    button[type="button"] {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 15px;
+      /*margin-bottom: 30px;*/
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
+  <script type="text/javascript">
+    var socketio = io();
+
+    const messages = document.getElementById("messages");
+
+    const createMessage = (name, msg) => {
+      const content = `
+        <div class="text">
+          <span><strong>${name}</strong>: ${msg}</span>
+          <span class="muted">${new Date().toLocaleString()}</span>
+        </div>
+      `;
+      messages.innerHTML += content;
+    };
+
+    socketio.on("message", (data) => {
+      createMessage(data.name, data.message);
+    });
+
+    const sendMessage = () => {
+      const message = document.getElementById("message");
+      if (message.value == "") return;
+      socketio.emit("message", { data: message.value });
+      message.value = "";
+    };
+  </script>
+{% for msg in messages %}
+<script type="text/javascript">
+createMessage("{{msg.name}}", "{{msg.message}}");
+</script>
+{% endfor %}
+{% endblock %}
